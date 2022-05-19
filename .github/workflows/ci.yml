@@ -55,7 +55,7 @@ jobs:
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "${{ steps.current-time.outputs.formattedTime }}"
-          prerelease: false
+          prerelease: true
           files: |
             openwrt-sdk-18.06.9-ipq40xx_gcc-7.3.0_musl_eabi.Linux-x86_64/bin/packages/arm_cortex-a7_neon-vfpv4/base/ua2f*
 
