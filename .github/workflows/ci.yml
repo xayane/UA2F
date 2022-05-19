@@ -39,13 +39,13 @@ jobs:
           ./scripts/feeds update -a
           ./scripts/feeds install -a
 
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          path: lede/package/UA2F
+      #- name: Checkout
+      #  uses: actions/checkout@v2
+      #  with:
+      #    path: lede/package/UA2F
 
       - name: Compile Package
-        working-directory: ./lede
+      #  working-directory: ./lede
         run: |
           make defconfig
           make package/UA2F/compile -j2 V=s
