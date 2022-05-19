@@ -71,11 +71,13 @@ jobs:
       
       - name: Update feeds
         run: |
+          cd lede
           ./scripts/feeds update -a
           ./scripts/feeds install -a
           
       - name: Costom configure file
         run: |
+          cd lede
           rm -f ./.config*
           touch ./.config
           #
@@ -253,10 +255,12 @@ jobs:
           make defconfig
       - name: Make download
         run: |
+          cd lede
           make download -j8
           find dl -size -1024c -exec rm -f {} \;
       - name: Compile firmware
         run: |
+          cd lede
           make -j$(nproc) || make -j1 V=s
           echo "======================="
           echo "Space usage:"
@@ -268,6 +272,7 @@ jobs:
           du -h --max-depth=1 ./bin
       - name: Prepare artifact
         run: |
+          cd lede
           mkdir -p ./artifact/firmware
           mkdir -p ./artifact/package
           mkdir -p ./artifact/buildinfo
@@ -279,19 +284,19 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: OpenWrt_buildinfo
-          path: ./artifact/buildinfo/
+          path: .lede/artifact/buildinfo/
 
       - name: Deliver package
         uses: actions/upload-artifact@v2
         with:
           name: OpenWrt_package
-          path: ./artifact/package/
+          path: .lede/artifact/package/
 
       - name: Deliver firmware
         uses: actions/upload-artifact@v2
         with:
           name: OpenWrt_firmware
-          path: ./bin/targets/
+          path: .lede/bin/targets/
   
 
       - name: Upload release asset
@@ -299,6 +304,6 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.YOURTOKEN }}
-          file: ./artifact/firmware/*
+          file: .lede/artifact/firmware/*
           tag: ${{ github.ref }}
           file_glob: true
