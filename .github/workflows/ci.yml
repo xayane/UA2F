@@ -65,7 +65,9 @@ jobs:
           
       - name: Get UA2F
         run: |
-          git clone https://github.com/Zxilly/UA2F.git package/UA2F
+           git clone https://github.com/coolsnowwolf/lede
+           cd lede          
+           git clone https://github.com/Zxilly/UA2F.git package/UA2F
       
       - name: Update feeds
         run: |
