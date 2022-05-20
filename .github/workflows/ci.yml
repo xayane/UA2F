@@ -272,31 +272,30 @@ jobs:
           du -h --max-depth=1 ./bin
       - name: Prepare artifact
         run: |
-          cd lede
           mkdir -p ./artifact/firmware
           mkdir -p ./artifact/package
           mkdir -p ./artifact/buildinfo
-          rm -rf $(find ./bin/targets/ -type d -name "packages")
-          cp -rf $(find ./bin/targets/ -type f) ./artifact/firmware/
-          cp -rf $(find ./bin/packages/ -type f -name "*.ipk") ./artifact/package/
-          cp -rf $(find ./bin/targets/ -type f -name "*.buildinfo" -o -name "*.manifest") ./artifact/buildinfo/
+          rm -rf $(find ./lede/bin/targets/ -type d -name "packages")
+          cp -rf $(find ./lede/bin/targets/ -type f) ./artifact/firmware/
+          cp -rf $(find ./lede/bin/packages/ -type f -name "*.ipk") ./artifact/package/
+          cp -rf $(find ./lede/bin/targets/ -type f -name "*.buildinfo" -o -name "*.manifest") ./artifact/buildinfo/
       - name: Deliver buildinfo
         uses: actions/upload-artifact@v2
         with:
           name: OpenWrt_buildinfo
-          path: .lede/artifact/buildinfo/
+          path: ./artifact/buildinfo/
 
       - name: Deliver package
         uses: actions/upload-artifact@v2
         with:
           name: OpenWrt_package
-          path: .lede/artifact/package/
+          path: ./artifact/package/
 
       - name: Deliver firmware
         uses: actions/upload-artifact@v2
         with:
           name: OpenWrt_firmware
-          path: .lede/bin/targets/
+          path: ./bin/targets/
   
 
       - name: Upload release asset
